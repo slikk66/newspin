@@ -72,7 +72,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 
 	user, err := h.DB.GetUser(loginRequest.Username)
 	if err != nil {
-		http.Error(w, "user not found", http.StatusUnauthorized)
+		http.Error(w, "user not found [B]", http.StatusUnauthorized)
 		return
 	}
 
