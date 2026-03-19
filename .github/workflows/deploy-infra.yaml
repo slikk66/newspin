@@ -1,0 +1,44 @@
+name: Deploy Infrastructure
+
+on:
+    push:
+        branches: [main]
+        paths:
+            - "infra/**"
+    workflow_dispatch:
+
+env:
+    AWS_REGION: us-west-2
+    PULUMI_CONFIG_PASSPHRASE: ""
+
+permissions:
+    id-token: write
+    contents: read
+
+jobs:
+    deploy-infra:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                  role-to-arn: ${{ vars.OIDC_ROLE_ARN }}
+                  aws-region: us-west-2
+
+            - name: Setup Go
+              uses: actions/setup-go@v5
+              with:
+                  go-version: "1.26.1"
+
+            - name: Install Pulumi
+              uses: pulumi/actions@v6
+
+            - name: Pulumi preview
+              working-directory: infra
+              run: pulumi preview --stack prod
+
+            - name: Pulumi up
+              working-directory: infra
+              run: pulumi up --yes --stack prod

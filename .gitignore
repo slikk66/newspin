@@ -1,0 +1,21 @@
+# Go
+/cmd/server/server
+*.exe
+
+# Node/Astro
+node_modules/
+web/dist/
+web/.astro/
+
+# IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Env
+.env
+*.pem
+
+# Pulumi
+infra/Pulumi.*.yaml
+!infra/Pulumi.yaml
