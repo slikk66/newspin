@@ -35,6 +35,10 @@ jobs:
             - name: Install Pulumi
               uses: pulumi/actions@v6
 
+            - name: Pulumi login
+              working-directory: infra
+              run: pulumi login --cloud-url "s3://${{ vars.PULUMI_STATE_BUCKET }}?region=us-west-2"
+
             - name: Pulumi preview
               working-directory: infra
               run: pulumi preview --stack prod
