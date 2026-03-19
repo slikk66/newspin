@@ -29,7 +29,7 @@ jobs:
             - name: Configure AWS credentials
               uses: aws-actions/configure-aws-credentials@v4
               with:
-                  role-to-arn: ${{ vars.OIDC_ROLE_ARN }}
+                  role-to-assume: ${{ vars.OIDC_ROLE_ARN }}
                   aws-region: us-west-2
 
             - name: Login to ECR
