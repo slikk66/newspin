@@ -74,7 +74,7 @@ func (c *Client) GetUser(username string) (*User, error) {
 		return nil, err
 	}
 	if result.Item == nil {
-		return nil, fmt.Errorf("user not found")
+		return nil, fmt.Errorf("no user found!")
 	}
 
 	var user User
