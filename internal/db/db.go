@@ -25,11 +25,14 @@ type User struct {
 }
 
 type Pin struct {
-	UserId    string `json:"userId" dynamodbav:"userId"`
-	ArticleId string `json:"articleId" dynamodbav:"articleId"`
-	Title     string `json:"title" dynamodbav:"title"`
-	Url       string `json:"url" dynamodbav:"url"`
-	PinnedAt  string `json:"pinnedAt" dynamodbav:"pinnedAt"`
+	UserId      string `json:"userId" dynamodbav:"userId"`
+	ArticleId   string `json:"articleId" dynamodbav:"articleId"`
+	Title       string `json:"title" dynamodbav:"title"`
+	Url         string `json:"url" dynamodbav:"url"`
+	Description string `json:"description" dynamodbav:"description"`
+	ImageUrl    string `json:"imageUrl" dynamodbav:"imageUrl"`
+	Source      string `json:"source" dynamodbav:"source"`
+	PinnedAt    string `json:"pinnedAt" dynamodbav:"pinnedAt"`
 }
 
 func NewClient(usersTable, pinsTable string) (*Client, error) {

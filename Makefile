@@ -9,7 +9,7 @@ TAG ?= latest
 .PHONY: build run ecr-login buildimage pushimage deploy
 
 build:
-	go build ./cmd/server/
+	go build -o cmd/server/server ./cmd/server/
 
 run:
 	go run ./cmd/server/

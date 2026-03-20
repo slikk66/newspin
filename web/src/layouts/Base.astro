@@ -11,7 +11,6 @@ import {
   GoogleTagmanagerNoscript,
 } from "@digi4care/astro-google-tagmanager";
 import { Font } from "astro:assets";
-import { ClientRouter } from "astro:transitions";
 
 // font families - extract font names for Font component (filter out type keys)
 const fontEntries = Object.entries(theme.fonts.font_family).filter(
@@ -93,8 +92,6 @@ const { title, meta_title, description, image, noindex, canonical } =
         description ? description : config.metadata.meta_description
       )}
     />
-
-    <ClientRouter />
 
     <!-- author from config.json -->
     <meta name="author" content={config.metadata.meta_author} />

@@ -26,9 +26,12 @@ type Handler struct {
 }
 
 type CreatePinRequest struct {
-	ArticleId string `json:"articleId"`
-	Title     string `json:"title"`
-	Url       string `json:"url"`
+	ArticleId   string `json:"articleId"`
+	Title       string `json:"title"`
+	Url         string `json:"url"`
+	Description string `json:"description"`
+	ImageUrl    string `json:"imageUrl"`
+	Source      string `json:"source"`
 }
 
 func NewHandler(dbClient *db.Client, newsClient *news.Client) *Handler {
@@ -129,10 +132,13 @@ func (h *Handler) CreatePin(w http.ResponseWriter, r *http.Request) {
 	username := r.Context().Value(auth.UsernameKey).(string)
 
 	pin := &db.Pin{
-		UserId:    username,
-		ArticleId: createPinRequest.ArticleId,
-		Title:     createPinRequest.Title,
-		Url:       createPinRequest.Url,
+		UserId:      username,
+		ArticleId:   createPinRequest.ArticleId,
+		Title:       createPinRequest.Title,
+		Url:         createPinRequest.Url,
+		Description: createPinRequest.Description,
+		ImageUrl:    createPinRequest.ImageUrl,
+		Source:      createPinRequest.Source,
 	}
 
 	if err := h.DB.CreatePin(pin); err != nil {
@@ -156,4 +162,15 @@ func (h *Handler) DeletePin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusNoContent)
+}
+
+func (h *Handler) GetFeatured(w http.ResponseWriter, r *http.Request) {
+	pins, err := h.DB.GetPins("FRONT_PAGE")
+	if err != nil {
+		http.Error(w, "server error GetFeatured", http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(pins)
 }

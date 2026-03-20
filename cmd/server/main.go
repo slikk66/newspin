@@ -28,6 +28,7 @@ func main() {
 	mux.HandleFunc("POST /api/register", h.Register)
 	mux.HandleFunc("POST /api/login", h.Login)
 	mux.HandleFunc("GET /api/news", h.SearchNews)
+	mux.HandleFunc("GET /api/news/featured", h.GetFeatured)
 
 	// 4. Protected routes (auth middleware)
 	mux.Handle("GET /api/pins", auth.AuthMiddleware(http.HandlerFunc(h.GetPins)))
