@@ -37,6 +37,17 @@ func main() {
 			return err
 		}
 
+		_, err = ecr.NewRepository(ctx, "stefanprodan", &ecr.RepositoryArgs{
+			Name:               pulumi.String("stefanprodan/podinfo"),
+			ImageTagMutability: pulumi.String("MUTABLE"),
+			ImageScanningConfiguration: &ecr.RepositoryImageScanningConfigurationArgs{
+				ScanOnPush: pulumi.Bool(false),
+			},
+		})
+		if err != nil {
+			return err
+		}
+
 		/// user dynamo table
 		userDynamoTableName := infraEnvPrefix + "users"
 
